@@ -1,14 +1,14 @@
 {
 	"FixedFileInfo": {
 		"FileVersion": {
-			"Major": 4,
-			"Minor": 0,
+			"Major": 0,
+			"Minor": 1,
 			"Patch": 0,
 			"Build": 0
 		},
 		"ProductVersion": {
-			"Major": 4,
-			"Minor": 0,
+			"Major": 0,
+			"Minor": 1,
 			"Patch": 0,
 			"Build": 0
 		},
@@ -19,17 +19,17 @@
 		"FileSubType": "00"
 	},
 	"StringFileInfo": {
-		"Comments": "pat.exe version 4.0.0-dev",
+		"Comments": "blackbox.exe 0.1.0-dev",
 		"CompanyName": "Stack Overflow",
-		"FileDescription": "Stack Overflow Puppet Agent Tool",
-		"FileVersion": "v4.0.0.0",
+		"FileDescription": "Stack Overflow Blackbox",
+		"FileVersion": "v0.1.0.0",
 		"InternalName": "pat",
 		"LegalCopyright": "(c) 2018 Stack Overflow",
 		"LegalTrademarks": "",
-		"OriginalFilename": "pat.exe",
+		"OriginalFilename": "blackbox.exe",
 		"PrivateBuild": "",
-		"ProductName": "PAT Tool",
-		"ProductVersion": "b44314331900debe01c13650cf4a026da9f0794a",
+		"ProductName": "BlackBox",
+		"ProductVersion": "47755e45a72b059a6ebeb034764ee514e874569c",
 		"SpecialBuild": ""
 	},
 	"VarFileInfo": {
