@@ -24,9 +24,18 @@ func main() {
 	}
 }
 
-func setup() {
-	err := blackbox.InitBlackbox()
+func setup(filename string) {
+	err := blackbox.InitBlackbox(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+// stripGpgExtension strips the GPG extension from a filename only if it's present
+func stripGpgExtension(filename string) string {
+	len := len(filename)
+	if filename[len-3:] == "gpg" {
+		return filename[0 : len-4]
+	}
+	return filename
 }

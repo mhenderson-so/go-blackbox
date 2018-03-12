@@ -7,7 +7,7 @@ import (
 )
 
 func listFiles() error {
-	setup()
+	setup("")
 	files, err := blackbox.ListFiles()
 	if err != nil {
 		return err
@@ -19,7 +19,7 @@ func listFiles() error {
 }
 
 func listAdmins() error {
-	setup()
+	setup("")
 	files, err := blackbox.ListAdmins()
 	if err != nil {
 		return err

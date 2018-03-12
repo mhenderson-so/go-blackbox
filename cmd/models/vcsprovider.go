@@ -8,7 +8,7 @@ import (
 // to function inside BlackBox.
 type VCSProvider interface {
 	GetRepoType() string
-	GetRepoBase() string
+	GetRepoBase(string) string
 }
 
 // vcsTypes contains the name and the provider for the registered VCS providers
@@ -29,13 +29,13 @@ func GetVCS(name string) *VCSProvider {
 
 // GetActiveCVS returns the currently active VCS provider for the current working directory.
 // If there is no valid provider, it returns the `unknown` provider.
-func GetActiveCVS() *VCSProvider {
+func GetActiveCVS(path string) *VCSProvider {
 	for name, vcs := range vcsTypes {
 		if name == "unknown" {
 			continue
 		}
 		thisVCS := *vcs
-		base := thisVCS.GetRepoBase() != ""
+		base := thisVCS.GetRepoBase(path) != ""
 		if base {
 			return vcs
 

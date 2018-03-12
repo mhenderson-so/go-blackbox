@@ -18,7 +18,7 @@ func init() {
 }
 
 // GetRepoBase returns current working directory
-func (vcs *vcs) GetRepoBase() string {
+func (vcs *vcs) GetRepoBase(path string) string {
 	wd, _ := os.Getwd()
 	return wd
 }

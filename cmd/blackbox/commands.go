@@ -7,7 +7,7 @@ import (
 var commands = []cli.Command{
 	{
 		Name:  "list",
-		Usage: "list some details of a blackboxed repository",
+		Usage: "List details of a blackboxed repository",
 		Subcommands: []cli.Command{
 			{
 				Name:  "admins",
@@ -21,6 +21,19 @@ var commands = []cli.Command{
 				Usage: "List the blackboxed files in this repository",
 				Action: func(c *cli.Context) error {
 					return listFiles()
+				},
+			},
+		},
+	},
+	{
+		Name:  "edit",
+		Usage: "Edit a blackboxed file",
+		Subcommands: []cli.Command{
+			{
+				Name:  "start",
+				Usage: "Decrypt a file so you can start editing it in another program",
+				Action: func(c *cli.Context) error {
+					return editStart(c.Args())
 				},
 			},
 		},
