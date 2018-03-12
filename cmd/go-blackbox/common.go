@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"strings"
+
+	_ "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox/vcsproviders"
+	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
 )
 
 var (
@@ -17,14 +19,16 @@ var (
 
 	blackboxDataCandidates = []string{"keyrings/live", ".blackbox"}
 	blackboxData           = ""
+	activeVCS              models.VCSProvider
 )
 
+// InitBlackbox must be called before you interact with blackbox for the first time.
+// It does things like detect the VCS, root directory and data paths for blackbox.
 func InitBlackbox() error {
-	err := setRepoBase()
-	if err != nil {
-		return fmt.Errorf("Error with blackbox repository: %s", err)
-	}
-	err = setBlackboxData()
+	vcs := models.GetActiveCVS()
+	activeVCS = *vcs
+	RepoBase = activeVCS.GetRepoBase()
+	err := setBlackboxData()
 	if err != nil {
 		return fmt.Errorf("Error with blackbox data: %s", err)
 	}
@@ -35,10 +39,7 @@ func InitBlackbox() error {
 func setBlackboxData() error {
 	for _, candidate := range blackboxDataCandidates {
 		path := path.Join(RepoBase, candidate)
-		pathOK, err := exists(path)
-		if err != nil {
-			return fmt.Errorf("Error detecting blackbox data path: %s", err)
-		}
+		pathOK, _ := models.Exists(path)
 		if pathOK {
 			blackboxData = path
 			return nil
@@ -46,23 +47,4 @@ func setBlackboxData() error {
 	}
 
 	return fmt.Errorf("Unable to detect blackbox data path. Have you run blackbox initialize?")
-}
-
-// https://stackoverflow.com/a/10510718/69683
-func exists(path string) (bool, error) {
-	if _, err := os.Stat(path); err != nil {
-		if os.IsNotExist(err) {
-			return false, err
-		}
-		return true, err
-
-	}
-
-	return true, nil
-}
-
-// We want all paths between Windows and Linux to have forward slashes. Just makes
-// things easier.
-func consistentSlashes(path string) string {
-	return strings.Replace(path, "\\", "/", -1)
 }
