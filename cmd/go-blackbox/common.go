@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 
@@ -56,7 +55,7 @@ func InitBlackbox(path string) error {
 
 func setBlackboxData() error {
 	for _, candidate := range blackboxDataCandidates {
-		path := path.Join(RepoBase, candidate)
+		path := filepath.Join(RepoBase, candidate)
 		pathOK, _ := models.Exists(path)
 		if pathOK {
 			blackboxData = path
@@ -91,7 +90,7 @@ func FilenameRelativeToVCSRoot(filename string) (string, error) {
 	fullPath := filename
 	if !filepath.IsAbs(fullPath) {
 		cwd, _ := os.Getwd()
-		fullPath = path.Join(cwd, filename)
+		fullPath = filepath.Join(cwd, filename)
 	}
 
 	fullPath = models.ConsistentSlashes(filepath.Clean(fullPath)) //I know that filepath.Clean() makes slashes consistent, but they're not consistent throughout the library

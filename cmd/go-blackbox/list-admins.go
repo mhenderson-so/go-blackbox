@@ -2,13 +2,13 @@ package blackbox
 
 import (
 	"io/ioutil"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
 // ListAdmins returns a []string of all the blackbox administrators for the repository
 func ListAdmins() ([]string, error) {
-	path := path.Join(blackboxData, "blackbox-admins.txt")
+	path := filepath.Join(blackboxData, "blackbox-admins.txt")
 	pathContents, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err

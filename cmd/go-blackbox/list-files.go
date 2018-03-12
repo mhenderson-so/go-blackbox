@@ -2,14 +2,14 @@ package blackbox
 
 import (
 	"io/ioutil"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
 // ListFiles returns a []string of all the blackboxed files
 // in the repository
 func ListFiles() ([]string, error) {
-	path := path.Join(blackboxData, "blackbox-files.txt")
+	path := filepath.Join(blackboxData, "blackbox-files.txt")
 	pathContents, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err

@@ -23,7 +23,7 @@ func (vcs *vcs) GetRepoBase(path string) string {
 	return wd
 }
 
-// GetRepoType returns git
+// GetRepoType returns unknown
 func (vcs *vcs) GetRepoType() string {
 	return RepoType
 }
