@@ -23,7 +23,16 @@ func editStart(args cli.Args) error {
 		if !blackbox.IsOnCryptList(filename) { //Check if the file we're trying to unblackbox is listed as a file in the keyring
 			log.Fatalf("%s is not a blackbox encrypted file", filename)
 		}
-		fmt.Println(filename, "is a blackbox file")
+
+		filename = fmt.Sprintf("%s.gpg", filename)
+		contents, err := blackbox.Decode(filename, "")
+		if err != nil {
+			log.Fatal("Error decoding file: ", err)
+		}
+
+		fmt.Println(string(contents))
+
+		//fmt.Println(filename, "is a blackbox file")
 	}
 	return nil
 }

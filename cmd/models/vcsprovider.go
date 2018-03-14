@@ -1,8 +1,6 @@
 package models
 
-import (
-	"bosun.org/slog"
-)
+import "log"
 
 // VCSProvider is the interface that all VCS drivers must meet in order
 // to function inside BlackBox.
@@ -17,7 +15,7 @@ var vcsTypes = map[string]*VCSProvider{}
 // RegisterVCS registers a VCS Provider for use with BlackBox
 func RegisterVCS(name string, VCS VCSProvider) {
 	if _, ok := vcsTypes[name]; ok {
-		slog.Fatalf("Cannot register the VCS %s multiple times", name)
+		log.Fatalf("Cannot register the VCS %s multiple times", name)
 	}
 	vcsTypes[name] = &VCS
 }
