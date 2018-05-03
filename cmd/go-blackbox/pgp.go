@@ -37,26 +37,28 @@ func Decode(filepath, passphrase string) ([]byte, error) {
 		passbytes = []byte(pass)
 	}
 
-	for _, entity := range entityList {
-		if entity.PrivateKey != nil {
-			err := entity.PrivateKey.Decrypt(passbytes)
-			if err == nil {
-				for idName := range entity.Identities {
-					fmt.Println("Found private key for", idName)
-				}
-			}
-		}
-	}
-
 	file, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
 	}
 
-	md, err := openpgp.ReadMessage(file, entityList, nil, nil)
+	md, err := openpgp.ReadMessage(file, entityList, func(keys []openpgp.Key, symmetric bool) ([]byte, error) {
+		for _, key := range keys {
+			if key.PrivateKey != nil {
+				err := key.PrivateKey.Decrypt(passbytes)
+				if err == nil {
+					for idName := range key.Entity.Identities {
+						fmt.Println("Found private key for", idName)
+					}
+				}
+			}
+		}
+		return nil, nil
+	}, nil)
 	if err != nil {
 		return nil, err
 	}
+
 	bytes, err := ioutil.ReadAll(md.UnverifiedBody)
 	if err != nil {
 		return nil, err
