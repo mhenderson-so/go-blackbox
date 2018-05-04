@@ -27,16 +27,16 @@
 			"revisionTime": "2017-01-09T16:22:49Z"
 		},
 		{
-			"checksumSHA1": "BM7+ZExKJO0ZL1Am7pws1HpjV4Q=",
-			"path": "github.com/jcmdev0/gpgagent",
-			"revision": "2f873a8dc8caba57926d52196eed8c59083fdec1",
-			"revisionTime": "2017-06-04T17:20:11Z"
-		},
-		{
 			"checksumSHA1": "WFHnkW8kn/7pxunMaS8QhU0b3BA=",
 			"path": "github.com/josephspurrier/goversioninfo",
 			"revision": "0d8781fedde91283df3f137ce4e8a5545fbc4a7f",
 			"revisionTime": "2017-12-05T05:30:42Z"
+		},
+		{
+			"checksumSHA1": "uI4kGToa8yZ8+YU94cL98HRyIJ0=",
+			"path": "github.com/mhenderson-so/gpgagent",
+			"revision": "caf2459f61b59d1cdb136952e16e8966246d8806",
+			"revisionTime": "2018-05-04T15:09:11Z"
 		},
 		{
 			"checksumSHA1": "V/quM7+em2ByJbWBLOsEwnY3j/Q=",
