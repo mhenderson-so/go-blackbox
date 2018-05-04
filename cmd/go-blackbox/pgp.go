@@ -14,7 +14,7 @@ import (
 // It loads the users `.gnupg/secring.gpg` file and uses the passphrase to attempt to
 // decode the private keys contained in the keyring.
 func Decode(filepath string, passphrase []byte) ([]byte, error) {
-	keyringFileBuffer, err := os.Open(privateKeyringPath())
+	keyringFileBuffer, err := os.Open(PrivateKeyringPath())
 	if err != nil {
 		return nil, err
 	}
@@ -37,14 +37,6 @@ func Decode(filepath string, passphrase []byte) ([]byte, error) {
 		for _, key := range keys {
 			if key.PrivateKey != nil {
 				key.PrivateKey.Decrypt(passphrase)
-				//err := key.PrivateKey.Decrypt(passphrase)
-				/*
-					if err == nil {
-						for idName := range key.Entity.Identities {
-							fmt.Println("Found private key for", idName)
-						}
-					}
-				*/
 			}
 		}
 		return nil, nil
@@ -61,11 +53,13 @@ func Decode(filepath string, passphrase []byte) ([]byte, error) {
 	return bytes, nil
 }
 
-func publicKeyringPath() string {
+// PublicKeyringPath returns the path to the users public keyring
+func PublicKeyringPath() string {
 	return filepath.Join(blackboxData, "pubring.gpg")
 }
 
-func privateKeyringPath() string {
+// PrivateKeyringPath returns the path to the users private keyring
+func PrivateKeyringPath() string {
 	home, _ := homedir.Dir()
 	return filepath.Join(home, ".gnupg", "secring.gpg")
 }
