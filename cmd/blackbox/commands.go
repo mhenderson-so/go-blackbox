@@ -26,6 +26,13 @@ var commands = []cli.Command{
 		},
 	},
 	{
+		Name:  "cat",
+		Usage: "Cat a blackboxed file",
+		Action: func(c *cli.Context) error {
+			return cat(c.Args())
+		},
+	},
+	{
 		Name:  "edit",
 		Usage: "Edit a blackboxed file",
 		Subcommands: []cli.Command{

@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/howeyc/gopass"
 	homedir "github.com/mitchellh/go-homedir"
 	"golang.org/x/crypto/openpgp"
 )
@@ -14,7 +13,7 @@ import (
 // Decode takes a blackbox-encrypted payload and decrypts it with the users private key.
 // It loads the users `.gnupg/secring.gpg` file and uses the passphrase to attempt to
 // decode the private keys contained in the keyring.
-func Decode(filepath, passphrase string) ([]byte, error) {
+func Decode(filepath string, passphrase []byte) ([]byte, error) {
 	keyringFileBuffer, err := os.Open(privateKeyringPath())
 	if err != nil {
 		return nil, err
@@ -25,16 +24,8 @@ func Decode(filepath, passphrase string) ([]byte, error) {
 		return nil, err
 	}
 
-	var passbytes []byte
-	if passphrase != "" {
-		passbytes = []byte(passphrase)
-	} else {
-		fmt.Printf("Enter gpg passphrase: ")
-		pass, err := gopass.GetPasswd()
-		if err != nil {
-			return nil, err
-		}
-		passbytes = []byte(pass)
+	if len(passphrase) == 0 {
+		return nil, fmt.Errorf("No passphrase supplied")
 	}
 
 	file, err := os.Open(filepath)
@@ -45,12 +36,15 @@ func Decode(filepath, passphrase string) ([]byte, error) {
 	md, err := openpgp.ReadMessage(file, entityList, func(keys []openpgp.Key, symmetric bool) ([]byte, error) {
 		for _, key := range keys {
 			if key.PrivateKey != nil {
-				err := key.PrivateKey.Decrypt(passbytes)
-				if err == nil {
-					for idName := range key.Entity.Identities {
-						fmt.Println("Found private key for", idName)
+				key.PrivateKey.Decrypt(passphrase)
+				//err := key.PrivateKey.Decrypt(passphrase)
+				/*
+					if err == nil {
+						for idName := range key.Entity.Identities {
+							fmt.Println("Found private key for", idName)
+						}
 					}
-				}
+				*/
 			}
 		}
 		return nil, nil
