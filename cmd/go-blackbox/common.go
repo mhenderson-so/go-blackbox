@@ -50,6 +50,7 @@ func InitBlackbox(path string) error {
 
 	vcs := models.GetActiveCVS(path)
 	activeVCS = *vcs
+	VCSType = activeVCS.GetRepoType()
 	RepoBase = activeVCS.GetRepoBase(path)
 	err := setBlackboxData()
 	if err != nil {
