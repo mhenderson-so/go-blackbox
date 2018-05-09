@@ -21,7 +21,6 @@ func initialize() error {
 	}
 
 	err := blackbox.Initialize(cwd)
-
 	if err != nil {
 		fmt.Println("Unable to initialize blackbox:", err)
 	}
