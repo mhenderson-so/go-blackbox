@@ -7,6 +7,8 @@ import "log"
 type VCSProvider interface {
 	GetRepoType() string
 	GetRepoBase(string) string
+	Ignore(string, []string) error
+	Attributes(string, []string) error
 }
 
 // vcsTypes contains the name and the provider for the registered VCS providers

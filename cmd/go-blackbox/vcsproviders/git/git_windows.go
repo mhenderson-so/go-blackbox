@@ -15,7 +15,7 @@ func (vcs *vcs) GetRepoBase(path string) string {
 	pathCurrent := strings.TrimSpace(models.ConsistentSlashes(path))
 	pathGit := strings.TrimSpace(models.ConsistentSlashes(string(gitOut)))
 
-	if string(gitOut) != "" && strings.Contains(pathCurrent, pathGit) {
+	if string(gitOut) != "" && strings.Contains(strings.ToLower(pathCurrent), strings.ToLower(pathGit)) {
 		return pathGit
 	}
 

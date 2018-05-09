@@ -19,9 +19,15 @@ var (
 	// VCS repository we are working in
 	VCSType = "unknown"
 
-	blackboxDataCandidates = []string{"keyrings/live", ".blackbox"}
-	blackboxData           = ""
-	activeVCS              models.VCSProvider
+	blackboxDataCandidates = []string{
+		filepath.Join("keyrings", "live"),
+		".blackbox",
+	}
+	blackboxData = ""
+	activeVCS    models.VCSProvider
+
+	blackboxAdminsFile = "blackbox-admins.txt"
+	blackboxFilesFile  = "blackbox-files.txt"
 )
 
 // InitBlackbox must be called before you interact with blackbox for the first time.

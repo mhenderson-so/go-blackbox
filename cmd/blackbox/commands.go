@@ -26,6 +26,20 @@ var commands = []cli.Command{
 		},
 	},
 	{
+		Name:  "initialize",
+		Usage: "Initialize a new repository for use with blackbox",
+		Action: func(c *cli.Context) error {
+			return initialize()
+		},
+	},
+	{
+		Name:   "initialise", //Not doing this as an alias as I want it to be hidden
+		Hidden: true,
+		Action: func(c *cli.Context) error {
+			return initialize()
+		},
+	},
+	{
 		Name:  "cat",
 		Usage: "Cat a blackboxed file",
 		Action: func(c *cli.Context) error {

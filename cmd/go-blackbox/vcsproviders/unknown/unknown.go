@@ -1,6 +1,7 @@
 package unknown
 
 import (
+	"fmt"
 	"os"
 
 	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
@@ -26,4 +27,14 @@ func (vcs *vcs) GetRepoBase(path string) string {
 // GetRepoType returns unknown
 func (vcs *vcs) GetRepoType() string {
 	return RepoType
+}
+
+// Ignore returns unknown
+func (vcs *vcs) Ignore(string, []string) error {
+	return fmt.Errorf("unknown VCS provider")
+}
+
+// Atttribute returns unknown
+func (vcs *vcs) Attributes(string, []string) error {
+	return fmt.Errorf("unknown VCS provider")
 }
