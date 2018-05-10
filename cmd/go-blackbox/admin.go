@@ -3,6 +3,8 @@ package blackbox
 import (
 	"encoding/hex"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -111,6 +113,11 @@ func AdminAdd(email, directory string) ([]string, error) {
 			if err != nil {
 				return nil, err
 			}
+
+			//And write out the new admins file
+			adminFile := filepath.Join(blackboxData, blackboxAdminsFile)
+			adminData := []byte(strings.Join(admins, "\n"))
+			ioutil.WriteFile(adminFile, adminData, 644)
 			continue
 		}
 	}
@@ -121,4 +128,57 @@ func AdminAdd(email, directory string) ([]string, error) {
 	}
 
 	return addedKeys, nil
+}
+
+// AdminCleanup compares the list of blackbox admin users against what is
+// present in the keychain, and removes users from the keychain who should
+// not be present
+func AdminCleanup() ([]string, error) {
+	bbAdmins, err := ListAdmins()
+	if err != nil {
+		return nil, err
+	}
+
+	blackboxFileBuffer, err := os.OpenFile(PublicKeyringPath(), os.O_CREATE|os.O_RDWR, 0644)
+	if err != nil {
+		return nil, err
+	}
+	defer blackboxFileBuffer.Close()
+	blackboxEntityList, err := openpgp.ReadKeyRing(blackboxFileBuffer)
+	if err != nil {
+		return nil, err
+	}
+
+	var removedAdmins []string
+	var finalEntityList openpgp.EntityList
+	for _, entity := range blackboxEntityList {
+		var foundMatch bool
+		for _, identity := range entity.Identities {
+			for _, admin := range bbAdmins {
+				if !foundMatch && strings.ToLower(admin) == strings.ToLower(identity.UserId.Email) {
+					foundMatch = true
+					finalEntityList = append(finalEntityList, entity)
+					continue
+				}
+			}
+			if !foundMatch {
+				fingerprint := hex.EncodeToString(entity.PrimaryKey.Fingerprint[:])
+				fingerprint = fingerprint[len(fingerprint)-8 : len(fingerprint)]
+				thisDesc := fmt.Sprintf("%s: %s <%s>", fingerprint, identity.UserId.Name, identity.UserId.Email)
+				if identity.UserId.Comment != "" {
+					thisDesc = fmt.Sprintf("%s (%s)", thisDesc, identity.UserId.Comment)
+				}
+
+				removedAdmins = append(removedAdmins, thisDesc)
+			}
+		}
+	}
+
+	blackboxFileBuffer.Truncate(0)
+	blackboxFileBuffer.Seek(0, io.SeekStart)
+	for _, ident := range finalEntityList {
+		ident.Serialize(blackboxFileBuffer)
+	}
+
+	return removedAdmins, nil
 }

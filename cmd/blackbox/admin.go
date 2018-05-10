@@ -34,3 +34,19 @@ func addadmin(args cli.Args) error {
 func removeadmin(args cli.Args) error {
 	return nil
 }
+
+func admincleanup() error {
+	setup("")
+	removed, err := blackbox.AdminCleanup()
+	if err != nil {
+		return err
+	}
+	if len(removed) > 0 {
+		fmt.Println("Orphaned admins removed:")
+		for _, admin := range removed {
+			fmt.Println("    ", admin)
+		}
+	}
+
+	return nil
+}

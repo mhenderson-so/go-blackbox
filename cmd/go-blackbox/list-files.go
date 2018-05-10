@@ -9,7 +9,7 @@ import (
 // ListFiles returns a []string of all the blackboxed files
 // in the repository
 func ListFiles() ([]string, error) {
-	path := filepath.Join(blackboxData, "blackbox-files.txt")
+	path := filepath.Join(blackboxData, blackboxFilesFile)
 	pathContents, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err

@@ -101,7 +101,7 @@ func FilenameRelativeToVCSRoot(filename string) (string, error) {
 	}
 
 	fullPath = models.ConsistentSlashes(filepath.Clean(fullPath)) //I know that filepath.Clean() makes slashes consistent, but they're not consistent throughout the library
-	if !strings.Contains(fullPath, RepoBase) {
+	if !strings.Contains(strings.ToLower(fullPath), strings.ToLower(RepoBase)) {
 		return "", fmt.Errorf("%s is not contained within the root directory of %s", filename, RepoBase)
 	}
 

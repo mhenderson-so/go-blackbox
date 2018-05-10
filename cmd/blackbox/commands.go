@@ -64,6 +64,20 @@ var commands = []cli.Command{
 					return editStart(c.Args())
 				},
 			},
+			{
+				Name:  "end",
+				Usage: "Encrypt a file once you have finished editing it in another program",
+				Action: func(c *cli.Context) error {
+					return editEnd(c.Args())
+				},
+			},
+		},
+	},
+	{
+		Name:  "cleanup",
+		Usage: "Cleans up the public keychain and removes orphaned entries",
+		Action: func(c *cli.Context) error {
+			return admincleanup()
 		},
 	},
 }
