@@ -47,6 +47,13 @@ var commands = []cli.Command{
 		},
 	},
 	{
+		Name:  "addadmin",
+		Usage: "Add an administrator to this repository",
+		Action: func(c *cli.Context) error {
+			return addadmin(c.Args())
+		},
+	},
+	{
 		Name:  "edit",
 		Usage: "Edit a blackboxed file",
 		Subcommands: []cli.Command{
