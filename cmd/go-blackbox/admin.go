@@ -63,7 +63,7 @@ func AdminAdd(email, directory string) ([]string, error) {
 
 	//Read the blackbox public keyring so we can add the new keys to it if we
 	//find any to add
-	blackboxFileBuffer, err := os.Open(PublicKeyringPath())
+	blackboxFileBuffer, err := os.OpenFile(PublicKeyringPath(), os.O_CREATE|os.O_RDWR, 0644)
 	if err != nil {
 		return nil, err
 	}
@@ -76,11 +76,12 @@ func AdminAdd(email, directory string) ([]string, error) {
 	//address. If we find one, check if it's currently in the blackbox keyring.
 	//If it isn't, add the description of the found key to the output.
 	var addedKeys []string
+	var foundMatch bool
 	for _, entity := range entityList { //Our users public keyrings
 		var keyAdded bool
 		for _, identity := range entity.Identities { //The identities contained within this keyring
 			if identity.UserId.Email == email { //We have a matching identity
-
+				foundMatch = true
 				//Check if we have a key that matches this ID already
 				matchingKeys := blackboxEntityList.KeysById(entity.PrimaryKey.KeyId)
 				//If we have zero matching keys, then this is a key to be added
@@ -98,12 +99,25 @@ func AdminAdd(email, directory string) ([]string, error) {
 						thisDesc = fmt.Sprintf("%s (%s)", thisDesc, identity.UserId.Comment)
 					}
 					addedKeys = append(addedKeys, thisDesc)
+					keyAdded = true
 				}
 			}
 		}
+
 		if keyAdded {
+			//We found a key to add, so put it onto the end of the keyring. The file seek() position will
+			//already be at the end of the file due to ReadKeyRing() earlier, so we don't need to move around.
+			err := entity.Serialize(blackboxFileBuffer)
+			if err != nil {
+				return nil, err
+			}
 			continue
 		}
+	}
+
+	//If we went through all of this but we never found a matching key, return an error saying so
+	if !foundMatch {
+		return nil, fmt.Errorf("Unable to find key matching %s", email)
 	}
 
 	return addedKeys, nil

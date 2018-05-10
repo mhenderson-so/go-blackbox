@@ -12,10 +12,17 @@ func addadmin(args cli.Args) error {
 	email := args.Get(0)
 	path := args.Get(1)
 
+	if email == "" {
+		return fmt.Errorf("No keyname (email address) provided")
+	}
+
 	newkeys, err := blackbox.AdminAdd(email, path)
 	if err != nil {
-		fmt.Println(err)
 		return err
+	}
+	if len(newkeys) == 0 {
+		fmt.Println("No changes made")
+		return nil
 	}
 	fmt.Println("Imported:")
 	for _, newkey := range newkeys {
