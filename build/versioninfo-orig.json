@@ -156,6 +156,6 @@
 			}
 		}
 	},
-	"IconPath": "",
-	"ManifestPath": "pat.exe.manifest"
+	"IconPath": "archive_black_box_wLD_icon.ico",
+	"ManifestPath": ""
 }

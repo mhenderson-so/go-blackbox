@@ -76,9 +76,10 @@ func main() {
 	}
 
 	//Path to the config for goversioninfo
-	versionInfoFile := filepath.Join(goPath, "src", "github.ds.stackexchange.com", "mhenderson", "go-blackbox", "versioninfo.json")
+	versionInfoTemplateFile := filepath.Join(goPath, "src", "github.ds.stackexchange.com", "mhenderson", "go-blackbox", "build", "versioninfo-orig.json")
+	versionInfoFile := filepath.Join(goPath, "src", "github.ds.stackexchange.com", "mhenderson", "go-blackbox", "cmd", "blackbox", "versioninfo.json")
 	//Contents of the config
-	versionInfoBytes, err := ioutil.ReadFile(fmt.Sprintf(versionInfoFile))
+	versionInfoBytes, err := ioutil.ReadFile(versionInfoTemplateFile)
 
 	if err == nil { //If we have a goversioninfo config file
 		if version.BuildVersion.Version == "" {
@@ -120,7 +121,10 @@ func main() {
 		//We need to write the config JSON back to the original file so that it can be picked up by the linker
 		versionInfoBytes, err := json.Marshal(versionInfo)
 		if err == nil {
-			ioutil.WriteFile(versionInfoFile, versionInfoBytes, 0755)
+			err = ioutil.WriteFile(versionInfoFile, versionInfoBytes, 0644)
+			if err != nil {
+				fmt.Println(err)
+			}
 			//Add parameters to the "go generate" array
 
 		}
