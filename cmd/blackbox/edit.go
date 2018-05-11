@@ -24,7 +24,7 @@ func editStart(args cli.Args) error {
 	for _, filename := range args {
 		filename = stripGpgExtension(filename)
 		if _, err := os.Stat(filename); err == nil {
-			return fmt.Errorf("SKIPPING: %s Will not overwrite non-empty files", filename)
+			return fmt.Errorf("SKIPPING: %s Will not overwrite existing files", filename)
 		}
 		content, err := preworkDecode(filename, passphrase)
 		if err != nil {

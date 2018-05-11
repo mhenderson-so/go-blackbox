@@ -74,6 +74,14 @@ var commands = []cli.Command{
 		},
 	},
 	{
+		Name:  "register",
+		Usage: "Take a previously unencrypted file and enrol it in blackbox",
+		Action: func(c *cli.Context) error {
+			return register(c.Args())
+		},
+	},
+
+	{
 		Name:  "cleanup",
 		Usage: "Cleans up the public keychain and removes orphaned entries",
 		Action: func(c *cli.Context) error {
