@@ -67,7 +67,7 @@ func ShortVersion() string {
 	version := BuildVersion.Version
 
 	if version == "" {
-		version = "4.0.0"
+		version = "2.0.0"
 	}
 
 	if BuildVersion.OfficialBuild == "" {
