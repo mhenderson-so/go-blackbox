@@ -14,7 +14,7 @@ import (
 // Decode takes a blackbox-encrypted payload and decrypts it with the users private key.
 // It loads the users `.gnupg/secring.gpg` file and uses the passphrase to attempt to
 // decode the private keys contained in the keyring.
-func Decode(filepath string, passphrase []byte) ([]byte, error) {
+func Decode(encrypted, passphrase []byte) ([]byte, error) {
 	keyringFileBuffer, err := os.Open(PrivateKeyringPath())
 	if err != nil {
 		return nil, err
@@ -29,12 +29,9 @@ func Decode(filepath string, passphrase []byte) ([]byte, error) {
 		return nil, fmt.Errorf("No passphrase supplied")
 	}
 
-	file, err := os.Open(filepath)
-	if err != nil {
-		return nil, err
-	}
+	byteBuffer := bytes.NewBuffer(encrypted)
 
-	md, err := openpgp.ReadMessage(file, entityList, func(keys []openpgp.Key, symmetric bool) ([]byte, error) {
+	md, err := openpgp.ReadMessage(byteBuffer, entityList, func(keys []openpgp.Key, symmetric bool) ([]byte, error) {
 		for _, key := range keys {
 			if key.PrivateKey != nil {
 				key.PrivateKey.Decrypt(passphrase)

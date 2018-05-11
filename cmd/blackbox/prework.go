@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -98,7 +99,12 @@ func preworkDecode(filename string, passphrase []byte) ([]byte, error) {
 	}
 
 	gpgFilename := fmt.Sprintf("%s.gpg", filename)
-	contents, err := blackbox.Decode(gpgFilename, passphrase)
+	encryptedContent, err := ioutil.ReadFile(gpgFilename)
+	if err != nil {
+		return nil, err
+	}
+
+	contents, err := blackbox.Decode(encryptedContent, passphrase)
 	if err != nil {
 		return nil, fmt.Errorf("Error decoding file: %s", err)
 	}
