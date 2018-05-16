@@ -155,7 +155,13 @@ func AdminCleanup() ([]string, error) {
 		var foundMatch bool
 		for _, identity := range entity.Identities {
 			for _, admin := range bbAdmins {
-				if !foundMatch && strings.ToLower(admin) == strings.ToLower(identity.UserId.Email) {
+				if !foundMatch && strings.TrimSpace(strings.ToLower(admin)) == strings.TrimSpace(strings.ToLower(identity.UserId.Email)) {
+					//Check if expired, remove if true
+					//Commented out for now, as doing this may require a run to update blackbox-admins.txt if we remove
+					//all the keys for a given user.
+					//if identity.SelfSignature.KeyExpired(time.Now()) {
+					//	continue
+					//}
 					foundMatch = true
 					finalEntityList = append(finalEntityList, entity)
 					continue
