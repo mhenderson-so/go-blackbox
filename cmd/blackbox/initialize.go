@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	blackbox "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox"
+	blackbox "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox"
 )
 
 func initialize() error {

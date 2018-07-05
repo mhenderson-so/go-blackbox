@@ -11,7 +11,7 @@ import (
 
 	"github.com/howeyc/gopass"
 	"github.com/mhenderson-so/gpgagent"
-	blackbox "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox"
+	blackbox "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox"
 	"golang.org/x/crypto/openpgp"
 )
 

@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"github.com/josephspurrier/goversioninfo"
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/version"
+	"github.com/mhenderson-so/go-blackbox/version"
 )
 
 var (
@@ -70,7 +70,7 @@ func main() {
 	}
 
 	timeStr := time.Now().UTC().Format("20060102150405")
-	ldFlags := fmt.Sprintf("-X github.ds.stackexchange.com/mhenderson/go-blackbox/version.VersionNumber=%s -X github.ds.stackexchange.com/mhenderson/go-blackbox/version.VersionSHA=%s -X github.ds.stackexchange.com/mhenderson/go-blackbox/version.VersionDate=%s -X github.ds.stackexchange.com/mhenderson/go-blackbox/version.OfficialBuild=%s -X github.ds.stackexchange.com/mhenderson/go-blackbox/version.BuildBranch=%s", *buildVersion, sha, timeStr, buildRelease, branchName)
+	ldFlags := fmt.Sprintf("-X github.com/mhenderson-so/go-blackbox/version.VersionNumber=%s -X github.com/mhenderson-so/go-blackbox/version.VersionSHA=%s -X github.com/mhenderson-so/go-blackbox/version.VersionDate=%s -X github.com/mhenderson-so/go-blackbox/version.OfficialBuild=%s -X github.com/mhenderson-so/go-blackbox/version.BuildBranch=%s", *buildVersion, sha, timeStr, buildRelease, branchName)
 
 	var buildArgs, genArgs []string
 
@@ -136,15 +136,15 @@ func main() {
 
 	binPath := filepath.Join(*output, binaryName)
 	buildArgs = append(buildArgs, "build", "-o", binPath)
-	buildArgs = append(buildArgs, "-ldflags", ldFlags, "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/blackbox")
-	genArgs = append(genArgs, "generate", "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/blackbox")
+	buildArgs = append(buildArgs, "-ldflags", ldFlags, "github.com/mhenderson-so/go-blackbox/cmd/blackbox")
+	genArgs = append(genArgs, "generate", "github.com/mhenderson-so/go-blackbox/cmd/blackbox")
 
 	//We always want to do a go generate. No harm in doing this anyway.
 	//Check that we have goversioninfo in the path
 	goVI, _ := exec.Command("goversioninfo", "-?").CombinedOutput() //This should get the help output
 	if len(goVI) == 0 {                                             //If we don't have any help
 		fmt.Println("[missing goversioninfo, attempting to install]")
-		outInstall, _ := exec.Command("go", "install", "github.ds.stackexchange.com/mhenderson/go-blackbox/vendor/github.com/josephspurrier/goversioninfo/cmd/goversioninfo").CombinedOutput()
+		outInstall, _ := exec.Command("go", "install", "github.com/mhenderson-so/go-blackbox/vendor/github.com/josephspurrier/goversioninfo/cmd/goversioninfo").CombinedOutput()
 		fmt.Println(string(outInstall)) //Install it
 	}
 

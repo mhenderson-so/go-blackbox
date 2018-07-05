@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	_ "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox/vcsproviders"
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
+	_ "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox/vcsproviders"
+	"github.com/mhenderson-so/go-blackbox/cmd/models"
 )
 
 var (

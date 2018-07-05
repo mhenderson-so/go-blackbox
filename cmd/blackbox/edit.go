@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 
+	blackbox "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox"
 	"github.com/urfave/cli"
-	blackbox "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox"
 )
 
 // editStart decrypts a list of files. They will need to be re-encrypted manually.

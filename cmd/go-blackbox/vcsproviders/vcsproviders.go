@@ -1,6 +1,6 @@
 package vcsproviders
 
 import (
-	_ "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox/vcsproviders/git"
-	_ "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox/vcsproviders/unknown"
+	_ "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox/vcsproviders/git"
+	_ "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox/vcsproviders/unknown"
 )

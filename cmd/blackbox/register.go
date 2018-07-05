@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
+	blackbox "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox"
 	"github.com/urfave/cli"
-	blackbox "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox"
 )
 
 func register(args cli.Args) error {

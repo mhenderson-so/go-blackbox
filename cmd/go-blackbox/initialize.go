@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
+	"github.com/mhenderson-so/go-blackbox/cmd/models"
 )
 
 // Initialize takes the path to a VCS repository and creates the

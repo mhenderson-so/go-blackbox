@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
+	"github.com/mhenderson-so/go-blackbox/cmd/models"
 )
 
 const (

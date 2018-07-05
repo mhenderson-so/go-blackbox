@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	blackbox "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox"
+	blackbox "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox"
 )
 
 func listFiles() error {

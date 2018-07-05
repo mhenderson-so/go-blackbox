@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
+	blackbox "github.com/mhenderson-so/go-blackbox/cmd/go-blackbox"
+	"github.com/mhenderson-so/go-blackbox/version"
 	"github.com/urfave/cli"
-	blackbox "github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/go-blackbox"
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/version"
 )
 
 var ()

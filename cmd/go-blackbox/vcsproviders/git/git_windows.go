@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
+	"github.com/mhenderson-so/go-blackbox/cmd/models"
 )
 
 // GetRepoBase returns the path to the base of the repository we're currently in

@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
+	"github.com/mhenderson-so/go-blackbox/cmd/models"
 )
 
 // Set REPOBASE to the top of the repository

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.ds.stackexchange.com/mhenderson/go-blackbox/cmd/models"
+	"github.com/mhenderson-so/go-blackbox/cmd/models"
 )
 
 // RegisterNewFile takes previously unencrypted file and enrolls it into
